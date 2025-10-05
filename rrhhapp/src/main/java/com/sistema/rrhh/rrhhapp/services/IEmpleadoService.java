@@ -13,7 +13,7 @@ public interface IEmpleadoService {
 
     public Empleado buscarEmpleadoPorId(Integer idEmpleado);
 
-    public Empleado guardarEmpleado(Empleado empleado);
+    public Empleado agregarEmpleado(Empleado empleado);
 
     public void eliminarEmpleado(Empleado empleado);
 

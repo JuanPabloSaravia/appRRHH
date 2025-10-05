@@ -25,7 +25,7 @@ public class EmpleadoService implements IEmpleadoService {
     }
 
     @Override
-    public Empleado guardarEmpleado(Empleado empleado) {
+    public Empleado agregarEmpleado(Empleado empleado) {
         return empleadoRepository.save(empleado);
     }
 

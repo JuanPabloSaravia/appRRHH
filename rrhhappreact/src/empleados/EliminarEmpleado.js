@@ -1,0 +1,63 @@
+import React, { useEffect } from 'react'
+import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
+
+export default function EliminarEmpleado() {
+    let navegacion = useNavigate();
+    const urlBase = "http://localhost:8080/rrhh-app/empleados";
+    const {id} = useParams();
+
+    const [empleado, setEmpleado] = React.useState({
+        nombre: '',
+        departamento: '',
+        sueldo: ''
+    });
+    const{nombre, departamento, sueldo} = empleado;
+
+    useEffect(() => {
+        cargarEmpleado();
+    }, []);
+
+    const cargarEmpleado = async () => {
+        const resultado = await axios.get(`${urlBase}/${id}`);
+        setEmpleado(resultado.data);
+    };
+
+    
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        await axios.delete(`${urlBase}/${id}`);
+        //redireccionar a la pagina principal
+        navegacion('/');
+    }
+  return (
+    <div className='container'>
+        <div className="container text-center" style={{ margin: "30px" }}>
+            <h3>Editar Empleado</h3>
+        </div>
+        <div className="container" style={{ maxWidth: "600px" }}>
+            <form onSubmit={(e) => onSubmit(e)}>
+                <div className="mb-3">
+                    <label htmlForm="nombre" className="form-label">Nombre</label>
+                    <input type="text" className="form-control" id="nombre" 
+                    name="nombre" required={true} value={nombre} />
+                </div>
+                <div className="mb-3">
+                    <label htmlForm="departamento" className="form-label">Departamento</label>
+                    <input type="text" className="form-control" id="departamento" 
+                    name="departamento" required={true} value={departamento} />  
+                </div>
+                <div className="mb-3">
+                    <label htmlForm="sueldo" className="form-label">Sueldo</label>
+                    <input type="number" step="any" className="form-control" id="sueldo"
+                     name="sueldo" value={sueldo} />  
+                </div>
+                <div className='text-center'>
+                    <button type="submit" className="btn btn-danger btn-sm me-3">Eliminar</button>
+                    <a href='/' className="btn btn-secondary btn-sm">Regresar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+  )
+}
